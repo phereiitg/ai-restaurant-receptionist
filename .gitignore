@@ -1,0 +1,17 @@
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+runtime/
+node_modules/
+.DS_Store
+.vscode/
+*.log
+*.wav
+*.mp3
+*.webm
+*.m4a
+*.ogg
