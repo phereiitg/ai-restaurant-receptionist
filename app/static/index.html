@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Atithi — Restaurant Operations</title>
+<link rel="stylesheet" href="/assets/styles.css"></head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <a class="brand" href="#overview" aria-label="Atithi home"><div class="brand-icon">अ</div><div><strong>Atithi<span class="brand-dot">.</span></strong><small>RESTAURANT OPERATIONS</small></div></a>
+    <div class="workspace-caption">WORKSPACE</div>
+    <nav id="navigation" aria-label="Main navigation">
+      <button class="nav-item active" data-section="overview"><span class="nav-symbol">◫</span> Overview</button>
+      <button class="nav-item" data-section="reservations"><span class="nav-symbol">▦</span> Reservations</button>
+      <button class="nav-item" data-section="floor"><span class="nav-symbol">⌗</span> Floor & service</button>
+      <button class="nav-item" data-section="calls"><span class="nav-symbol">◉</span> Calls & requests</button>
+      <button class="nav-item" data-section="voice"><span class="nav-symbol">◎</span> Voice studio <span class="nav-pill">TEST</span></button>
+      <button class="nav-item" data-section="menu"><span class="nav-symbol">≡</span> Menu</button>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="sidebar-subtitle">DEMO RESTAURANT</div>
+      <div class="restaurant-name">The Banyan Table</div>
+      <div class="restaurant-location">Guwahati, India · Illustrative venue</div>
+      <div class="connection"><span class="live-dot"></span><span id="backend-status">Connecting to backend</span></div>
+    </div>
+  </aside>
+  <main class="main-area">
+    <header class="topbar">
+      <div class="crumb"><span class="crumb-muted">The Banyan Table</span><span class="crumb-divider">/</span><span id="current-section">Overview</span></div>
+      <div class="top-actions"><div id="current-date" class="top-date"></div><button id="refresh-btn" class="btn btn-secondary btn-small" title="Refresh current data">↻ Refresh</button><span class="avatar">M</span></div>
+    </header>
+    <div class="content">
+      <section id="section-overview" class="page active">
+        <div class="page-heading"><div><div class="eyebrow">LIVE OPERATIONS <span class="eyebrow-line"></span> MANAGER'S DESK</div><h1>Good evening<span class="title-period">.</span></h1><p>A clear view of your floor, reservations, and the conversations behind them.</p></div><button class="btn btn-primary" data-action="new-booking">+ New reservation</button></div>
+        <div class="metric-grid">
+          <article class="metric"><span class="metric-label">TODAY'S BOOKINGS</span><strong id="kpi-bookings">—</strong><small>Confirmed reservations</small></article>
+          <article class="metric"><span class="metric-label">CALL SESSIONS</span><strong id="kpi-calls">—</strong><small>Recorded in this workspace</small></article>
+          <article class="metric"><span class="metric-label">OPEN REQUESTS</span><strong id="kpi-tasks">—</strong><small>Need a manager's attention</small></article>
+          <article class="metric accent"><span class="metric-label">TABLES READY</span><strong id="kpi-ready">—</strong><small>Marked ready by your team</small></article>
+        </div>
+        <div class="two-column">
+          <article class="panel"><div class="panel-heading"><div><h2>Floor at a glance</h2><p>Staff-confirmed table states</p></div><button class="link-button" data-action="go-floor">Manage floor ↗</button></div><div class="mini-table-map" id="overview-map"></div><div class="legend"><span><i class="dot ready"></i> Ready</span><span><i class="dot occupied"></i> Occupied</span><span><i class="dot dirty"></i> Needs cleaning</span><span><i class="dot blocked"></i> Blocked</span></div></article>
+          <article class="panel"><div class="panel-heading"><div><h2>Latest reservations</h2><p>Live entries from the booking ledger</p></div><button class="link-button" data-action="go-reservations">View all ↗</button></div><div id="recent-bookings" class="compact-list"></div></article>
+        </div>
+        <div class="panel banner"><div class="banner-icon">◎</div><div><h2>Meet your AI host</h2><p>Speak in Hindi or Hinglish. The assistant checks real inventory before committing a reservation.</p></div><button class="btn btn-light" data-action="go-voice">Open voice studio ↗</button></div>
+      </section>
+
+      <section id="section-reservations" class="page">
+        <div class="page-heading calendar-page-heading"><div><div class="eyebrow">RESERVATION CALENDAR</div><h1>Reservations<span class="title-period">.</span></h1><p>Table occupancy and guest bookings in Asia/Kolkata time.</p></div><button id="calendar-new" class="btn btn-primary">+ New reservation</button></div>
+        <article class="panel calendar-panel">
+          <div class="calendar-toolbar"><div class="calendar-nav"><button id="calendar-prev" class="btn btn-secondary btn-small" aria-label="Previous period">?</button><button id="calendar-today" class="btn btn-secondary btn-small">Today</button><button id="calendar-next" class="btn btn-secondary btn-small" aria-label="Next period">?</button><h2 id="calendar-title" aria-live="polite"></h2></div><div class="calendar-views" role="group" aria-label="Calendar view"><button class="calendar-view active" data-view="day">Day</button><button class="calendar-view" data-view="week">Week</button><button class="calendar-view" data-view="month">Month</button></div></div>
+          <div class="calendar-legend"><span><i class="event-key confirmed-key"></i> Confirmed</span><span><i class="event-key cancelled-key"></i> Cancelled</span><span>Times shown in Asia/Kolkata</span></div>
+          <div id="calendar-grid" class="calendar-grid" aria-live="polite"></div>
+        </article>
+        <div class="panel calendar-capacity"><div><h2>Table capacities</h2><p>Bookings occupy the assigned table for the stored seating duration.</p></div><div id="calendar-table-legend" class="table-capacity-list"></div></div>
+      </section>      <section id="section-floor" class="page">
+        <div class="page-heading"><div><div class="eyebrow">SERVICE OPERATIONS</div><h1>Floor & service<span class="title-period">.</span></h1><p>Only staff-confirmed readiness is used. No camera inference or face tracking.</p></div></div>
+        <div class="panel"><div class="panel-heading"><div><h2>Table status board</h2><p>Changes persist immediately to the database</p></div><span class="muted-note">8 TABLES · 1 ROOM</span></div><div id="floor-grid" class="floor-grid"></div></div>
+        <div class="panel note-panel"><strong>How this affects calls</strong><p>Blocked tables cannot be reserved. Occupied and dirty tables are excluded from near-term inventory; future reservations can be considered once staff makes the table ready.</p></div>
+      </section>
+
+      <section id="section-calls" class="page">
+        <div class="page-heading"><div><div class="eyebrow">COMMUNICATIONS</div><h1>Calls & requests<span class="title-period">.</span></h1><p>Review customer interactions and manager handoffs in one place.</p></div></div>
+        <div class="two-column"><article class="panel"><div class="panel-heading"><div><h2>Call activity</h2><p>Actual recorded browser and Twilio sessions</p></div></div><div id="call-list" class="ledger"></div></article><article class="panel"><div class="panel-heading"><div><h2>Manager requests</h2><p>Tasks raised by the assistant or staff</p></div></div><div id="task-list" class="ledger"></div></article></div>
+        <article class="panel transcript-panel"><div class="panel-heading"><div><h2>Selected conversation</h2><p>Transcript and assistant actions</p></div></div><div id="call-transcript" class="transcript-empty">Choose a call above to inspect its transcript.</div></article>
+      </section>
+
+      <section id="section-voice" class="page">
+        <div class="page-heading"><div><div class="eyebrow">LIVE VOICE EXPERIMENT</div><h1>Voice studio<span class="title-period">.</span></h1><p>Test the same customer workflow used by the telephone bridge. This is turn-based, not full-duplex.</p></div></div>
+        <div class="two-column voice-layout">
+          <div class="panel voice-panel"><div class="voice-top"><span class="pill-outline">CUSTOMER CALL SIMULATION</span><span id="voice-provider" class="provider-status">Checking providers</span></div>
+            <div class="mic-stage"><div class="mic-orbit"><button id="record-button" class="mic-button" type="button" aria-label="Start or stop recording">◉</button></div><h2 id="mic-label">Tap to record a message</h2><p>Speak for up to 25 seconds. Press again to finish.</p></div>
+            <div class="audio-preview"><audio id="original-audio" controls hidden></audio><audio id="reply-audio" controls hidden></audio></div>
+            <div class="voice-divider"><span>or type for a deterministic system test</span></div>
+            <form id="chat-form" class="message-input"><input id="chat-input" placeholder="Book 4 people tomorrow at 8 pm" autocomplete="off" required><button type="submit" aria-label="Send typed message">→</button></form>
+            <div class="voice-hint">Examples: "4 people tomorrow at 8 pm" · "What's on the menu?" · "I need a manager"</div>
+          </div>
+          <div class="panel conversation-panel"><div class="panel-heading"><div><h2>Conversation</h2><p>Recognized speech, backend response and source modes</p></div><button id="new-session" class="link-button">New session ↻</button></div><div id="conversation" class="conversation"><div class="intro-message">Your conversation will appear here. Live Gnani transcription is shown only after a real provider response.</div></div><div id="turn-state" class="turn-state">Ready to test</div></div>
+        </div>
+        <div class="note-panel panel"><strong>Testable, not scripted.</strong><p>If Gnani/Gemini keys are missing, the system identifies that condition. Typed messages can use an explicitly labelled limited rule-based demo parser; recorded audio cannot pretend to be transcribed.</p></div>
+      </section>
+
+      <section id="section-menu" class="page"><div class="page-heading"><div><div class="eyebrow">RESTAURANT KNOWLEDGE</div><h1>Menu<span class="title-period">.</span></h1><p>The voice assistant retrieves prices from these database records, never from guesses.</p></div></div><div id="menu-groups" class="menu-groups"></div></section>
+    </div>
+  </main>
+</div>
+<dialog id="reservation-dialog" class="reservation-dialog" aria-labelledby="reservation-dialog-title">
+  <div class="dialog-heading"><div><div class="eyebrow">RESERVATION DETAILS</div><h2 id="reservation-dialog-title">New reservation</h2></div><button id="dialog-close" class="dialog-close" aria-label="Close dialog">?</button></div>
+  <div id="reservation-detail" class="reservation-detail" hidden></div>
+  <form id="calendar-booking-form" class="form-grid" novalidate>
+    <input type="hidden" name="reservation_id">
+    <label class="full">Guest name<input name="guest_name" minlength="2" maxlength="80" required autocomplete="name" placeholder="e.g. Aditi Sharma"></label>
+    <label>Guests<select name="party_size"><option value="1">1 guest</option><option value="2" selected>2 guests</option><option value="3">3 guests</option><option value="4">4 guests</option><option value="5">5 guests</option><option value="6">6 guests</option><option value="7">7 guests</option><option value="8">8 guests</option></select></label>
+    <label>Table<select name="table_id"><option value="">Automatic assignment</option></select><small class="field-hint">Capacity and availability are checked when saved.</small></label>
+    <label>Date<input name="date" type="date" required></label>
+    <label>Start time<input name="time" type="time" min="11:00" max="22:00" step="1800" required></label>
+    <label>Phone (optional)<input name="phone" maxlength="50" autocomplete="tel" placeholder="Demo contact only"></label>
+    <label class="full">Special notes<textarea name="notes" rows="3" maxlength="500" placeholder="High chair, birthday seating, etc."></textarea></label>
+    <div class="form-error full" id="reservation-form-error" role="alert" hidden></div>
+    <button type="submit" class="btn btn-primary full" id="reservation-save">Create reservation</button>
+  </form>
+  <div id="reservation-actions" class="reservation-actions" hidden><button id="reservation-edit" class="btn btn-secondary">Modify reservation</button><button id="reservation-cancel" class="btn btn-danger">Cancel reservation</button></div>
+</dialog><div id="toast" class="toast" role="status" aria-live="polite"></div>
+<div id="login" class="login-overlay"><form id="login-form" class="login-card"><div class="brand-icon">अ</div><div class="eyebrow">RESTAURANT WORKSPACE</div><h2>Manager access</h2><p>Enter the local manager token from <code>.env</code> to access this demonstration.</p><label>Manager token<input type="password" id="admin-key" required autocomplete="off" placeholder="Your configured ADMIN_TOKEN"></label><button class="btn btn-primary" type="submit">Open workspace →</button><small>Use local development only. Real deployments require individual authentication.</small></form></div>
+<script src="/assets/app.js" defer></script>
+</body></html>
